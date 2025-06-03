@@ -1,0 +1,163 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-8">Your Cart</h1>
+  
+  {% if cart.item_count > 0 %}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Cart Items -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+          <div class="p-6 border-b">
+            <div class="flex justify-between items-center">
+              <h2 class="text-lg font-semibold">Shopping Cart ({{ cart.item_count }})</h2>
+              <a href="/collections/all" class="text-primary hover:text-primary/80 text-sm font-medium">Continue Shopping</a>
+            </div>
+          </div>
+          
+          <div class="divide-y">
+            {% for item in cart.items %}
+              <div class="p-6">
+                <div class="flex flex-col sm:flex-row">
+                  <div class="sm:w-24 sm:h-24 flex-shrink-0 overflow-hidden rounded-md mb-4 sm:mb-0">
+                    <img 
+                      src="{{ item.image | img_url: '150x150', crop: 'center' }}" 
+                      alt="{{ item.title | escape }}" 
+                      class="w-full h-full object-center object-cover"
+                    >
+                  </div>
+                  
+                  <div class="flex-1 sm:ml-6">
+                    <div class="flex justify-between">
+                      <div>
+                        <h3 class="text-base font-medium text-gray-900">
+                          <a href="{{ item.url }}">{{ item.product.title }}</a>
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">{{ item.variant.title }}</p>
+                        <p class="mt-1 text-sm text-gray-500">{{ item.product.vendor }}</p>
+                      </div>
+                      <p class="text-base font-medium text-gray-900">{{ item.final_line_price | money }}</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-4">
+                      <div class="flex items-center border rounded-md">
+                        <button 
+                          type="button" 
+                          class="p-2 text-gray-600 hover:text-gray-900"
+                          onclick="updateQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})"
+                          {% if item.quantity == 1 %}disabled{% endif %}
+                        >
+                          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                          </svg>
+                        </button>
+                        <span class="px-4 py-2 text-gray-900">{{ item.quantity }}</span>
+                        <button 
+                          type="button" 
+                          class="p-2 text-gray-600 hover:text-gray-900"
+                          onclick="updateQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})"
+                        >
+                          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                          </svg>
+                        </button>
+                      </div>
+                      
+                      <button 
+                        type="button" 
+                        class="text-red-600 hover:text-red-800 text-sm font-medium"
+                        onclick="updateQuantity('{{ item.key }}', 0)"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Order Summary -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden sticky top-20">
+          <div class="p-6 border-b">
+            <h2 class="text-lg font-semibold">Order Summary</h2>
+          </div>
+          
+          <div class="p-6 space-y-4">
+            <div class="flex justify-between">
+              <p class="text-gray-600">Subtotal</p>
+              <p class="font-medium">{{ cart.total_price | money }}</p>
+            </div>
+            
+            <div class="flex justify-between">
+              <p class="text-gray-600">Shipping</p>
+              <p class="font-medium">Calculated at checkout</p>
+            </div>
+            
+            <div class="flex justify-between">
+              <p class="text-gray-600">Tax</p>
+              <p class="font-medium">Calculated at checkout</p>
+            </div>
+            
+            <div class="border-t pt-4 flex justify-between">
+              <p class="text-lg font-semibold">Total</p>
+              <p class="text-lg font-semibold">{{ cart.total_price | money }}</p>
+            </div>
+            
+            <div class="mt-6">
+              <a 
+                href="/checkout" 
+                class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center transition"
+              >
+                Proceed to Checkout
+              </a>
+            </div>
+            
+            <div class="mt-4">
+              <div class="flex items-center justify-center space-x-4">
+                <img src="{{ 'payment-visa.svg' | asset_url }}" alt="Visa" class="h-8">
+                <img src="{{ 'payment-mastercard.svg' | asset_url }}" alt="Mastercard" class="h-8">
+                <img src="{{ 'payment-amex.svg' | asset_url }}" alt="American Express" class="h-8">
+                <img src="{{ 'payment-paypal.svg' | asset_url }}" alt="PayPal" class="h-8">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="text-center py-12">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+      <h2 class="text-2xl font-bold mb-4">Your cart is empty</h2>
+      <p class="text-gray-600 mb-8">Looks like you haven't added any items to your cart yet.</p>
+      <a href="/collections/all" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition">
+        Start Shopping
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  function updateQuantity(key, quantity) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: key,
+        quantity: quantity
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>

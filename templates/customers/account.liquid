@@ -1,0 +1,114 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+      <h1 class="text-3xl font-bold">{{ 'customer.account.title' | t }}</h1>
+      <div class="mt-4 md:mt-0">
+        <a href="/account/logout" class="text-primary hover:text-primary/80">Log out</a>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Order History -->
+      <div class="md:col-span-2">
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+          <div class="p-6 border-b">
+            <h2 class="text-lg font-semibold">{{ 'customer.orders.title' | t }}</h2>
+          </div>
+          
+          <div class="divide-y">
+            {% if customer.orders.size > 0 %}
+              {% for order in customer.orders %}
+                <div class="p-6">
+                  <div class="flex flex-col sm:flex-row justify-between mb-4">
+                    <div>
+                      <p class="font-medium">{{ 'customer.orders.order_number' | t }}: {{ order.name }}</p>
+                      <p class="text-sm text-gray-500">{{ order.created_at | date: format: 'date_formats.month_day_year' }}</p>
+                    </div>
+                    <div class="mt-2 sm:mt-0">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                        {% if order.financial_status == 'paid' %}
+                          bg-green-100 text-green-800
+                        {% elsif order.financial_status == 'pending' %}
+                          bg-yellow-100 text-yellow-800
+                        {% elsif order.financial_status == 'refunded' %}
+                          bg-blue-100 text-blue-800
+                        {% else %}
+                          bg-gray-100 text-gray-800
+                        {% endif %}
+                      ">
+                        {{ order.financial_status_label }}
+                      </span>
+                      
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ml-2
+                        {% if order.fulfillment_status == 'fulfilled' %}
+                          bg-green-100 text-green-800
+                        {% elsif order.fulfillment_status == 'partial' %}
+                          bg-yellow-100 text-yellow-800
+                        {% else %}
+                          bg-gray-100 text-gray-800
+                        {% endif %}
+                      ">
+                        {{ order.fulfillment_status_label }}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                    <div>
+                      <p class="text-gray-600">{{ 'customer.orders.total' | t }}: <span class="font-medium">{{ order.total_price | money }}</span></p>
+                      <p class="text-gray-600">{{ order.line_items_quantity }} items</p>
+                    </div>
+                    <div class="mt-4 sm:mt-0">
+                      <a href="{{ order.customer_url }}" class="text-primary hover:text-primary/80 font-medium">
+                        View Order
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="p-6 text-center">
+                <p class="text-gray-600">{{ 'customer.orders.none' | t }}</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Account Details -->
+      <div class="md:col-span-1">
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+          <div class="p-6 border-b">
+            <h2 class="text-lg font-semibold">{{ 'customer.account.details' | t }}</h2>
+          </div>
+          
+          <div class="p-6">
+            <p class="font-medium">{{ customer.name }}</p>
+            <p class="text-gray-600">{{ customer.email }}</p>
+            
+            <div class="mt-6">
+              <h3 class="font-medium mb-2">Default Address</h3>
+              {% if customer.default_address %}
+                <p>{{ customer.default_address.address1 }}</p>
+                {% if customer.default_address.address2 != "" %}
+                  <p>{{ customer.default_address.address2 }}</p>
+                {% endif %}
+                <p>{{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}</p>
+                <p>{{ customer.default_address.country }}</p>
+                <p>{{ customer.default_address.phone }}</p>
+              {% else %}
+                <p class="text-gray-600">No default address</p>
+              {% endif %}
+              
+              <div class="mt-4">
+                <a href="/account/addresses" class="text-primary hover:text-primary/80 font-medium">
+                  {{ 'customer.account.view_addresses' | t }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

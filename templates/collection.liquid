@@ -1,0 +1,208 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- Sidebar Filters -->
+    <div class="w-full md:w-64 shrink-0">
+      <div class="bg-white rounded-lg shadow-sm p-4 border sticky top-20">
+        <h2 class="font-bold text-lg mb-4">Filters</h2>
+        
+        <!-- Price Range -->
+        <div class="mb-6">
+          <h3 class="font-medium text-gray-900 mb-2">Price</h3>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <input id="price-1" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="price-1" class="ml-2 text-sm text-gray-700">Under $50</label>
+            </div>
+            <div class="flex items-center">
+              <input id="price-2" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="price-2" class="ml-2 text-sm text-gray-700">$50 to $100</label>
+            </div>
+            <div class="flex items-center">
+              <input id="price-3" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="price-3" class="ml-2 text-sm text-gray-700">$100 to $200</label>
+            </div>
+            <div class="flex items-center">
+              <input id="price-4" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="price-4" class="ml-2 text-sm text-gray-700">$200 & Above</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Availability -->
+        <div class="mb-6">
+          <h3 class="font-medium text-gray-900 mb-2">Availability</h3>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <input id="in-stock" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="in-stock" class="ml-2 text-sm text-gray-700">In Stock</label>
+            </div>
+            <div class="flex items-center">
+              <input id="out-of-stock" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="out-of-stock" class="ml-2 text-sm text-gray-700">Out of Stock</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Vendor -->
+        <div class="mb-6">
+          <h3 class="font-medium text-gray-900 mb-2">Brand</h3>
+          <div class="space-y-2">
+            {% for vendor in collection.all_vendors %}
+              <div class="flex items-center">
+                <input id="vendor-{{ forloop.index }}" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
+                <label for="vendor-{{ forloop.index }}" class="ml-2 text-sm text-gray-700">{{ vendor }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition">
+          Apply Filters
+        </button>
+      </div>
+    </div>
+    
+    <!-- Products Grid -->
+    <div class="flex-1">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+        <h1 class="text-2xl font-bold">{{ collection.title }}</h1>
+        
+        <div class="flex items-center mt-4 sm:mt-0">
+          <label for="sort-by" class="text-sm text-gray-700 mr-2">Sort by:</label>
+          <select id="sort-by" class="text-sm border-gray-300 rounded-md focus:border-primary focus:ring-primary">
+            <option value="manual">Featured</option>
+            <option value="price-ascending">Price: Low to High</option>
+            <option value="price-descending">Price: High to Low</option>
+            <option value="title-ascending">Alphabetically: A-Z</option>
+            <option value="title-descending">Alphabetically: Z-A</option>
+            <option value="created-descending">Date: New to Old</option>
+            <option value="created-ascending">Date: Old to New</option>
+          </select>
+        </div>
+      </div>
+      
+      {% if collection.description != blank %}
+        <div class="bg-white rounded-lg shadow-sm p-4 border mb-6">
+          <div class="prose max-w-none">
+            {{ collection.description }}
+          </div>
+        </div>
+      {% endif %}
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for product in collection.products %}
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition group">
+            <a href="{{ product.url }}" class="block relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+                {% if product.featured_image != blank %}
+                  <img 
+                    src="{{ product.featured_image | img_url: '500x500', crop: 'center' }}" 
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300"
+                  >
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+                {% endif %}
+              </div>
+              
+              {% if product.compare_at_price > product.price %}
+                <span class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                  Sale
+                </span>
+              {% endif %}
+            </a>
+            
+            <div class="p-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900 mb-1">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h3>
+                  <p class="text-sm text-gray-500 mb-2">{{ product.vendor }}</p>
+                </div>
+                
+                <div class="flex items-center">
+                  {% if product.compare_at_price > product.price %}
+                    <span class="text-gray-400 line-through text-sm mr-2">{{ product.compare_at_price | money }}</span>
+                  {% endif %}
+                  <span class="text-lg font-medium text-gray-900">{{ product.price | money }}</span>
+                </div>
+              </div>
+              
+              <div class="mt-2">
+                {% if product.available %}
+                  <form method="post" action="/cart/add">
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition">
+                      Add to Cart
+                    </button>
+                  </form>
+                {% else %}
+                  <button disabled class="w-full bg-gray-200 text-gray-500 py-2 rounded-lg cursor-not-allowed">
+                    Sold Out
+                  </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      
+      {% if paginate.pages > 1 %}
+        <div class="flex justify-center mt-8">
+          <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Previous</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            {% else %}
+              <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400">
+                <span class="sr-only">Previous</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            {% endif %}
+            
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  {{ part.title }}
+                </a>
+              {% else %}
+                {% if part.title == paginate.current_page %}
+                  <span class="relative inline-flex items-center px-4 py-2 border border-primary bg-primary text-sm font-medium text-white">
+                    {{ part.title }}
+                  </span>
+                {% else %}
+                  <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                    {{ part.title }}
+                  </span>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Next</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            {% else %}
+              <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400">
+                <span class="sr-only">Next</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            {% endif %}
+          </nav>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<section class="py-16 bg-darker relative overflow-hidden">
+  <!-- Tech Background Elements -->
+  <div class="absolute inset-0 z-0">
+    <!-- Circuit Lines -->
+    <div class="absolute top-1/4 left-0 right-0 h-0.5 bg-primary/20"></div>
+    <div class="absolute top-3/4 left-0 right-0 h-0.5 bg-secondary/20"></div>
+    <div class="absolute left-1/4 top-0 bottom-0 w-0.5 bg-primary/20"></div>
+    <div class="absolute left-3/4 top-0 bottom-0 w-0.5 bg-secondary/20"></div>
+    
+    <!-- Circuit Nodes -->
+    <div class="absolute top-1/4 left-1/4 w-4 h-4 rounded-full bg-dark border border-primary/40"></div>
+    <div class="absolute top-1/4 left-3/4 w-4 h-4 rounded-full bg-dark border border-secondary/40"></div>
+    <div class="absolute top-3/4 left-1/4 w-4 h-4 rounded-full bg-dark border border-secondary/40"></div>
+    <div class="absolute top-3/4 left-3/4 w-4 h-4 rounded-full bg-dark border border-primary/40"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-12">
+      <div class="inline-block relative">
+        <h2 class="text-3xl font-bold mb-2 uppercase diagonal-line pl-4">{{ section.settings.heading | default: 'Gaming Categories' }}</h2>
+        <div class="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
+      </div>
+      <p class="text-gray-400 max-w-2xl mx-auto font-light">{{ section.settings.subheading | default: 'Browse our specialized gaming categories to find exactly what you need for your ultimate setup.' }}</p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for block in section.blocks %}
+        {% if block.settings.collection != blank %}
+          {% assign collection = collections[block.settings.collection] %}
+          <a href="{{ collection.url }}" class="group">
+            <div class="relative rounded-lg overflow-hidden">
+              <!-- Glow Effect -->
+              <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-lg blur opacity-20 group-hover:opacity-60 transition duration-300"></div>
+              
+              <div class="relative bg-darker rounded-lg overflow-hidden">
+                <div class="aspect-w-16 aspect-h-9">
+                  {% if block.settings.image != blank %}
+                    <img 
+                      src="{{ block.settings.image | img_url: '800x450', crop: 'center' }}" 
+                      alt="{{ collection.title }}"
+                      class="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300"
+                    >
+                  {% elsif collection.image != blank %}
+                    <img 
+                      src="{{ collection.image | img_url: '800x450', crop: 'center' }}" 
+                      alt="{{ collection.title }}"
+                      class="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300"
+                    >
+                  {% else %}
+                    {{ 'collection-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+                  {% endif %}
+                  
+                  <!-- Tech Overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-darker via-darker/80 to-transparent"></div>
+                  
+                  <!-- Corner Accents -->
+                  <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary group-hover:border-white transition-colors duration-300"></div>
+                  <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary group-hover:border-white transition-colors duration-300"></div>
+                  <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary group-hover:border-white transition-colors duration-300"></div>
+                  <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary group-hover:border-white transition-colors duration-300"></div>
+                </div>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 class="text-xl font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors duration-300">{{ collection.title }}</h3>
+                  <p class="text-white/80 text-sm mt-1 font-mono">{{ collection.products_count }} products</p>
+                  
+                  <div class="mt-3 inline-flex items-center text-primary text-sm font-medium">
+                    <span class="mr-2">EXPLORE</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Gaming Categories"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse our specialized gaming categories to find exactly what you need for your ultimate setup."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categories",
+      "category": "Collections",
+      "blocks": [
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

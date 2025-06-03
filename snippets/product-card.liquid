@@ -1,0 +1,54 @@
+<div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition group">
+  <a href="{{ product.url }}" class="block relative">
+    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+      {% if product.featured_image != blank %}
+        <img 
+          src="{{ product.featured_image | img_url: '500x500', crop: 'center' }}" 
+          alt="{{ product.featured_image.alt | escape }}"
+          class="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300"
+        >
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+      {% endif %}
+    </div>
+    
+    {% if product.compare_at_price > product.price %}
+      <span class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+        {{ 'products.product.on_sale' | t }}
+      </span>
+    {% endif %}
+  </a>
+  
+  <div class="p-4">
+    <div class="flex justify-between items-start">
+      <div>
+        <h3 class="text-lg font-medium text-gray-900 mb-1">
+          <a href="{{ product.url }}">{{ product.title }}</a>
+        </h3>
+        <p class="text-sm text-gray-500 mb-2">{{ product.vendor }}</p>
+      </div>
+      
+      <div class="flex items-center">
+        {% if product.compare_at_price > product.price %}
+          <span class="text-gray-400 line-through text-sm mr-2">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="text-lg font-medium text-gray-900">{{ product.price | money }}</span>
+      </div>
+    </div>
+    
+    <div class="mt-2">
+      {% if product.available %}
+        <form method="post" action="/cart/add">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition">
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+        </form>
+      {% else %}
+        <button disabled class="w-full bg-gray-200 text-gray-500 py-2 rounded-lg cursor-not-allowed">
+          {{ 'products.product.sold_out' | t }}
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>

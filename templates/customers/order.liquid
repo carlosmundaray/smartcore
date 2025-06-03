@@ -1,0 +1,176 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">{{ 'customer.order.title' | t: name: order.name }}</h1>
+      <a href="/account" class="text-primary hover:text-primary/80">
+        {{ 'customer.account.return' | t }}
+      </a>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-sm border overflow-hidden mb-8">
+      <div class="p-6 border-b">
+        <div class="flex flex-col sm:flex-row justify-between">
+          <div>
+            <p class="text-gray-600">{{ 'customer.order.date' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
+          </div>
+          <div class="mt-4 sm:mt-0">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+              {% if order.financial_status == 'paid' %}
+                bg-green-100 text-green-800
+              {% elsif order.financial_status == 'pending' %}
+                bg-yellow-100 text-yellow-800
+              {% elsif order.financial_status == 'refunded' %}
+                bg-blue-100 text-blue-800
+              {% else %}
+                bg-gray-100 text-gray-800
+              {% endif %}
+            ">
+              {{ order.financial_status_label }}
+            </span>
+            
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ml-2
+              {% if order.fulfillment_status == 'fulfilled' %}
+                bg-green-100 text-green-800
+              {% elsif order.fulfillment_status == 'partial' %}
+                bg-yellow-100 text-yellow-800
+              {% else %}
+                bg-gray-100 text-gray-800
+              {% endif %}
+            ">
+              {{ order.fulfillment_status_label }}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Order Details -->
+          <div>
+            <h2 class="text-lg font-semibold mb-4">{{ 'customer.order.order_details' | t }}</h2>
+            
+            <div class="space-y-4">
+              {% for line_item in order.line_items %}
+                <div class="flex">
+                  <div class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                    {% if line_item.image %}
+                      <img 
+                        src="{{ line_item.image | img_url: '120x120', crop: 'center' }}" 
+                        alt="{{ line_item.title | escape }}" 
+                        class="w-full h-full object-center object-cover"
+                      >
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+                    {% endif %}
+                  </div>
+                  
+                  <div class="ml-4 flex-1">
+                    <div class="flex justify-between">
+                      <div>
+                        <h3 class="text-base font-medium text-gray-900">
+                          <a href="{{ line_item.product_id | append: '/' | prepend: '/products/' }}">{{ line_item.title }}</a>
+                        </h3>
+                        {% if line_item.variant_title != 'Default Title' %}
+                          <p class="mt-1 text-sm text-gray-500">{{ line_item.variant_title }}</p>
+                        {% endif %}
+                        {% if line_item.sku != blank %}
+                          <p class="mt-1 text-sm text-gray-500">{{ 'products.product.sku' | t }}: {{ line_item.sku }}</p>
+                        {% endif %}
+                      </div>
+                      <p class="text-base font-medium text-gray-900">{{ line_item.price | money }}</p>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-2">
+                      <p class="text-sm text-gray-500">{{ 'cart.label.quantity' | t }}: {{ line_item.quantity }}</p>
+                      <p class="text-sm font-medium text-gray-900">{{ line_item.quantity | times: line_item.price | money }}</p>
+                    </div>
+                    
+                    {% if line_item.fulfillment %}
+                      <div class="mt-2">
+                        <p class="text-sm text-green-600">
+                          {{ 'customer.order.fulfilled_at' | t: date: line_item.fulfillment.created_at | date: format: 'date_formats.month_day_year' }}
+                        </p>
+                        
+                        {% if line_item.fulfillment.tracking_number %}
+                          <p class="text-sm text-gray-500">
+                            {{ 'customer.order.tracking_number' | t }}: 
+                            {% if line_item.fulfillment.tracking_url %}
+                              <a href="{{ line_item.fulfillment.tracking_url }}" class="text-primary hover:text-primary/80">
+                                {{ line_item.fulfillment.tracking_company }} - {{ line_item.fulfillment.tracking_number }}
+                              </a>
+                            {% else %}
+                              {{ line_item.fulfillment.tracking_company }} - {{ line_item.fulfillment.tracking_number }}
+                            {% endif %}
+                          </p>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          
+          <!-- Customer Information -->
+          <div>
+            <div class="mb-6">
+              <h2 class="text-lg font-semibold mb-4">{{ 'customer.order.billing_address' | t }}</h2>
+              <p>{{ order.billing_address.name }}</p>
+              <p>{{ order.billing_address.company }}</p>
+              <p>{{ order.billing_address.street }}</p>
+              <p>{{ order.billing_address.city }}, {{ order.billing_address.province_code }} {{ order.billing_address.zip }}</p>
+              <p>{{ order.billing_address.country }}</p>
+              <p>{{ order.billing_address.phone }}</p>
+            </div>
+            
+            <div>
+              <h2 class="text-lg font-semibold mb-4">{{ 'customer.order.shipping_address' | t }}</h2>
+              <p>{{ order.shipping_address.name }}</p>
+              <p>{{ order.shipping_address.company }}</p>
+              <p>{{ order.shipping_address.street }}</p>
+              <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province_code }} {{ order.shipping_address.zip }}</p>
+              <p>{{ order.shipping_address.country }}</p>
+              <p>{{ order.shipping_address.phone }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Order Summary -->
+        <div class="mt-8 border-t pt-8">
+          <h2 class="text-lg font-semibold mb-4">{{ 'customer.order.order_summary' | t }}</h2>
+          
+          <div class="w-full max-w-md ml-auto">
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <p class="text-gray-600">{{ 'customer.order.subtotal' | t }}</p>
+                <p class="font-medium">{{ order.subtotal_price | money }}</p>
+              </div>
+              
+              {% for discount in order.discounts %}
+                <div class="flex justify-between">
+                  <p class="text-gray-600">{{ 'customer.order.discount' | t }} ({{ discount.code }})</p>
+                  <p class="font-medium">-{{ discount.amount | money }}</p>
+                </div>
+              {% endfor %}
+              
+              <div class="flex justify-between">
+                <p class="text-gray-600">{{ 'customer.order.shipping' | t }}</p>
+                <p class="font-medium">{{ order.shipping_price | money }}</p>
+              </div>
+              
+              <div class="flex justify-between">
+                <p class="text-gray-600">{{ 'customer.order.tax' | t }}</p>
+                <p class="font-medium">{{ order.tax_price | money }}</p>
+              </div>
+              
+              <div class="flex justify-between border-t pt-2 font-bold">
+                <p>{{ 'customer.order.total' | t }}</p>
+                <p>{{ order.total_price | money }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

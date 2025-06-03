@@ -1,0 +1,416 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">{{ 'customer.addresses.title' | t }}</h1>
+      <a href="/account" class="text-primary hover:text-primary/80">
+        {{ 'customer.account.return' | t }}
+      </a>
+    </div>
+    
+    <div class="mb-8">
+      <button 
+        type="button" 
+        onclick="Shopify.CustomerAddress.toggleNewForm();" 
+        class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition"
+      >
+        {{ 'customer.addresses.add_new' | t }}
+      </button>
+    </div>
+    
+    <!-- Add Address Form -->
+    <div id="add_address" class="bg-white rounded-lg shadow-sm border overflow-hidden mb-8" style="display: none;">
+      <div class="p-6 border-b">
+        <h2 class="text-lg font-semibold">{{ 'customer.addresses.add_new' | t }}</h2>
+      </div>
+      
+      <div class="p-6">
+        {% form 'customer_address', customer.new_address %}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="address_first_name_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.first_name' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_first_name_new" 
+                name="address[first_name]" 
+                value="{{ form.first_name }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_last_name_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.last_name' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_last_name_new" 
+                name="address[last_name]" 
+                value="{{ form.last_name }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_company_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.company' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_company_new" 
+                name="address[company]" 
+                value="{{ form.company }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_address1_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.address1' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_address1_new" 
+                name="address[address1]" 
+                value="{{ form.address1 }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_address2_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.address2' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_address2_new" 
+                name="address[address2]" 
+                value="{{ form.address2 }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_city_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.city' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_city_new" 
+                name="address[city]" 
+                value="{{ form.city }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_country_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.country' | t }}
+              </label>
+              <select 
+                id="address_country_new" 
+                name="address[country]" 
+                data-default="{{ form.country }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+                {{ all_country_option_tags }}
+              </select>
+            </div>
+            
+            <div id="address_province_container_new" style="display:none;">
+              <label for="address_province_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.province' | t }}
+              </label>
+              <select 
+                id="address_province_new" 
+                name="address[province]" 
+                data-default="{{ form.province }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+              </select>
+            </div>
+            
+            <div>
+              <label for="address_zip_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.zip' | t }}
+              </label>
+              <input 
+                type="text" 
+                id="address_zip_new" 
+                name="address[zip]" 
+                value="{{ form.zip }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="address_phone_new" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.addresses.phone' | t }}
+              </label>
+              <input 
+                type="tel" 
+                id="address_phone_new" 
+                name="address[phone]" 
+                value="{{ form.phone }}" 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+          </div>
+          
+          <div class="mt-6">
+            <div class="flex items-center">
+              {{ form.set_as_default_checkbox }}
+              <label for="address_default_address_new" class="ml-2 text-sm text-gray-700">
+                {{ 'customer.addresses.set_default' | t }}
+              </label>
+            </div>
+          </div>
+          
+          <div class="mt-6 flex space-x-4">
+            <button 
+              type="submit" 
+              class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition"
+            >
+              {{ 'customer.addresses.add' | t }}
+            </button>
+            
+            <button 
+              type="button" 
+              onclick="Shopify.CustomerAddress.toggleNewForm();" 
+              class="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition"
+            >
+              {{ 'customer.addresses.cancel' | t }}
+            </button>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+    
+    <!-- Addresses List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% for address in customer.addresses %}
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+          <div class="p-6 border-b">
+            <div class="flex justify-between items-center">
+              <h2 class="text-lg font-semibold">
+                {{ address.first_name }} {{ address.last_name }}
+                {% if address == customer.default_address %}
+                  <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    {{ 'customer.addresses.default' | t }}
+                  </span>
+                {% endif %}
+              </h2>
+              <div class="flex space-x-2">
+                <button 
+                  type="button" 
+                  onclick="Shopify.CustomerAddress.toggleEditForm({{ address.id }});" 
+                  class="text-primary hover:text-primary/80"
+                >
+                  {{ 'customer.addresses.edit' | t }}
+                </button>
+                <form method="post" action="/account/addresses/{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                  <input type="hidden" name="_method" value="delete">
+                  <button 
+                    type="submit" 
+                    class="text-red-600 hover:text-red-800"
+                    onclick="return confirm(this.getAttribute('data-confirm-message'))"
+                  >
+                    {{ 'customer.addresses.delete' | t }}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6">
+            <p>{{ address.company }}</p>
+            <p>{{ address.street }}</p>
+            <p>{{ address.city }}, {{ address.province_code }} {{ address.zip }}</p>
+            <p>{{ address.country }}</p>
+            <p>{{ address.phone }}</p>
+          </div>
+          
+          <!-- Edit Address Form -->
+          <div id="edit_address_{{ address.id }}" class="p-6 border-t" style="display: none;">
+            <h3 class="text-lg font-semibold mb-4">{{ 'customer.addresses.edit_address' | t }}</h3>
+            
+            {% form 'customer_address', address %}
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="address_first_name_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.first_name' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_first_name_{{ address.id }}" 
+                    name="address[first_name]" 
+                    value="{{ form.first_name }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_last_name_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.last_name' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_last_name_{{ address.id }}" 
+                    name="address[last_name]" 
+                    value="{{ form.last_name }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_company_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.company' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_company_{{ address.id }}" 
+                    name="address[company]" 
+                    value="{{ form.company }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_address1_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.address1' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_address1_{{ address.id }}" 
+                    name="address[address1]" 
+                    value="{{ form.address1 }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_address2_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.address2' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_address2_{{ address.id }}" 
+                    name="address[address2]" 
+                    value="{{ form.address2 }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_city_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.city' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_city_{{ address.id }}" 
+                    name="address[city]" 
+                    value="{{ form.city }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_country_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.country' | t }}
+                  </label>
+                  <select 
+                    id="address_country_{{ address.id }}" 
+                    name="address[country]" 
+                    data-default="{{ form.country }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                    {{ all_country_option_tags }}
+                  </select>
+                </div>
+                
+                <div id="address_province_container_{{ address.id }}" style="display:none;">
+                  <label for="address_province_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.province' | t }}
+                  </label>
+                  <select 
+                    id="address_province_{{ address.id }}" 
+                    name="address[province]" 
+                    data-default="{{ form.province }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="address_zip_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.zip' | t }}
+                  </label>
+                  <input 
+                    type="text" 
+                    id="address_zip_{{ address.id }}" 
+                    name="address[zip]" 
+                    value="{{ form.zip }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+                
+                <div>
+                  <label for="address_phone_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ 'customer.addresses.phone' | t }}
+                  </label>
+                  <input 
+                    type="tel" 
+                    id="address_phone_{{ address.id }}" 
+                    name="address[phone]" 
+                    value="{{ form.phone }}" 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                </div>
+              </div>
+              
+              <div class="mt-6">
+                <div class="flex items-center">
+                  {{ form.set_as_default_checkbox }}
+                  <label for="address_default_address_{{ address.id }}" class="ml-2 text-sm text-gray-700">
+                    {{ 'customer.addresses.set_default' | t }}
+                  </label>
+                </div>
+              </div>
+              
+              <div class="mt-6 flex space-x-4">
+                <button 
+                  type="submit" 
+                  class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition"
+                >
+                  {{ 'customer.addresses.update' | t }}
+                </button>
+                
+                <button 
+                  type="button" 
+                  onclick="Shopify.CustomerAddress.toggleEditForm({{ address.id }});" 
+                  class="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition"
+                >
+                  {{ 'customer.addresses.cancel' | t }}
+                </button>
+              </div>
+            {% endform %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Initialize country/province selectors
+  new Shopify.CountryProvinceSelector('address_country_new', 'address_province_new', {
+    hideElement: 'address_province_container_new'
+  });
+  
+  {% for address in customer.addresses %}
+    new Shopify.CountryProvinceSelector('address_country_{{ address.id }}', 'address_province_{{ address.id }}', {
+      hideElement: 'address_province_container_{{ address.id }}'
+    });
+  {% endfor %}
+</script>

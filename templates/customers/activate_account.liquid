@@ -1,0 +1,57 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+      <div class="p-6 border-b">
+        <h1 class="text-2xl font-bold">{{ 'customer.activate_account.title' | t }}</h1>
+        <p class="text-gray-600 mt-2">{{ 'customer.activate_account.subtext' | t }}</p>
+      </div>
+      
+      <div class="p-6">
+        {% form 'activate_customer_password' %}
+          {{ form.errors | default_errors }}
+          
+          <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+              {{ 'customer.activate_account.password' | t }}
+            </label>
+            <input 
+              type="password" 
+              name="customer[password]" 
+              id="password" 
+              class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+            >
+          </div>
+          
+          <div class="mb-6">
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">
+              {{ 'customer.activate_account.password_confirm' | t }}
+            </label>
+            <input 
+              type="password" 
+              name="customer[password_confirmation]" 
+              id="password_confirmation" 
+              class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+            >
+          </div>
+          
+          <div class="flex space-x-4">
+            <button 
+              type="submit" 
+              class="flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition"
+            >
+              {{ 'customer.activate_account.submit' | t }}
+            </button>
+            
+            <button 
+              type="submit" 
+              name="decline" 
+              class="flex-1 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition"
+            >
+              {{ 'customer.activate_account.cancel' | t }}
+            </button>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>

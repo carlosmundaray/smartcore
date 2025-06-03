@@ -1,0 +1,89 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+      <div class="p-6 border-b">
+        <h1 class="text-2xl font-bold">{{ 'customer.register.title' | t }}</h1>
+      </div>
+      
+      <div class="p-6">
+        {% form 'create_customer' %}
+          {{ form.errors | default_errors }}
+          
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.register.first_name' | t }}
+              </label>
+              <input 
+                type="text" 
+                name="customer[first_name]" 
+                id="first_name" 
+                {% if form.first_name %}value="{{ form.first_name }}"{% endif %} 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+            
+            <div>
+              <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ 'customer.register.last_name' | t }}
+              </label>
+              <input 
+                type="text" 
+                name="customer[last_name]" 
+                id="last_name" 
+                {% if form.last_name %}value="{{ form.last_name }}"{% endif %} 
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              >
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+              {{ 'customer.register.email' | t }}
+            </label>
+            <input 
+              type="email" 
+              name="customer[email]" 
+              id="email" 
+              {% if form.email %}value="{{ form.email }}"{% endif %} 
+              class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+            >
+          </div>
+          
+          <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+              {{ 'customer.register.password' | t }}
+            </label>
+            <input 
+              type="password" 
+              name="customer[password]" 
+              id="password" 
+              class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
+            >
+          </div>
+          
+          <div class="mt-6">
+            <button 
+              type="submit" 
+              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition"
+            >
+              {{ 'customer.register.submit' | t }}
+            </button>
+          </div>
+          
+          <div class="mt-4 text-center">
+            <p class="text-gray-600">
+              {{ 'customer.register.already_have_account' | t }} 
+              <a href="{{ routes.account_login_url }}" class="text-primary hover:text-primary/80">
+                {{ 'customer.login.title' | t }}
+              </a>
+            </p>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
