@@ -1,0 +1,81 @@
+<section class="py-20 relative overflow-hidden">
+  <!-- Futuristic Background -->
+  <div class="absolute inset-0">
+    <div class="w-full h-full bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzR2Nmg2di02aC02em0wLTEwdjZoNnYtNmgtNnptMTAgMTB2Nmg2di02aC02em0tMTAtMjB2Nmg2di02aC02em0xMCAxMHY2aDZ2LTZoLTZ6bTEwIDEwdjZoNnYtNmgtNnptLTIwIDB2Nmg2di02aC02em0wLTEwdjZoNnYtNmgtNnptMC0xMHY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center text-white">
+      <h2 class="text-5xl md:text-7xl font-bold mb-6 uppercase tracking-wider">
+        {{ section.settings.main_title | default: 'Precision Gaming Powered by SmartCore' }}
+        <span class="text-primary">™</span>
+      </h2>
+      <p class="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
+        {{ section.settings.subtitle | default: 'Gear Up for Performance Gaming Experience' }}
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        {% if section.settings.primary_button_text != blank %}
+          <a href="{{ section.settings.primary_button_link | default: '/collections/all' }}" 
+             class="bg-primary hover:bg-primary/90 text-black font-bold py-3 px-8 rounded-lg uppercase tracking-wider transition">
+            {{ section.settings.primary_button_text }}
+          </a>
+        {% endif %}
+        
+        {% if section.settings.secondary_button_text != blank %}
+          <a href="{{ section.settings.secondary_button_link | default: '/pages/about-us' }}" 
+             class="border-2 border-white text-white hover:bg-white hover:text-black font-bold py-3 px-8 rounded-lg uppercase tracking-wider transition">
+            {{ section.settings.secondary_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Precision Gaming",
+  "settings": [
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Title",
+      "default": "Precision Gaming Powered by SmartCore"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Gear Up for Performance Gaming Experience"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary Button Text"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary Button Text"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Precision Gaming",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

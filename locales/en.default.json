@@ -3,6 +3,15 @@
     "accessibility": {
       "skip_to_content": "Skip to content"
     },
+    "navigation": {
+      "home": "Home",
+      "catalog": "Catalog",
+      "sale": "Sale",
+      "blog": "Blog",
+      "brand_story": "Brand Story",
+      "support": "Support",
+      "theme_features": "Theme Features"
+    },
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
@@ -44,7 +53,7 @@
         "other": "{{ count }} results for \"{{ terms }}\""
       },
       "title": "Search our store",
-      "placeholder": "Search for gaming gear",
+      "placeholder": "Search for tech products",
       "submit": "Search",
       "close": "Close search"
     },
@@ -237,13 +246,17 @@
   "date_formats": {
     "month_day_year": "%B %d, %Y"
   },
-  "gaming_categories": {
+  "tech_categories": {
     "gaming_pcs": "Gaming PCs",
     "monitors": "Gaming Monitors",
     "keyboards": "Mechanical Keyboards",
     "mice": "Gaming Mice",
     "headsets": "Gaming Headsets",
     "accessories": "Accessories",
-    "components": "PC Components"
+    "components": "PC Components",
+    "laptops": "Laptops",
+    "tablets": "Tablets",
+    "smartphones": "Smartphones",
+    "wearables": "Wearables"
   }
 }

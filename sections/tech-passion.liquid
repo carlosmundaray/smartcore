@@ -1,0 +1,156 @@
+<section class="py-16 bg-dark">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold uppercase tracking-wider text-white mb-4">
+        {{ section.settings.section_title | default: 'IGNITE YOUR TECH PASSION' }}
+      </h2>
+      <p class="text-gray-400">
+        {{ section.settings.section_subtitle | default: 'Dynamic Technology for an Immersive Digital Experience' }}
+      </p>
+    </div>
+    
+    <div class="relative max-w-6xl mx-auto">
+      <!-- Main Tech Setup Image -->
+      <div class="relative rounded-2xl overflow-hidden">
+        {% if section.settings.main_image != blank %}
+          <img 
+            src="{{ section.settings.main_image | img_url: 'master' }}" 
+            alt="Tech Setup" 
+            class="w-full h-96 object-cover"
+          >
+        {% else %}
+          <div class="w-full h-96 bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900 flex items-center justify-center">
+            <span class="text-white text-2xl">Tech Setup</span>
+          </div>
+        {% endif %}
+        
+        <!-- Overlay Content -->
+        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <div class="text-center text-white">
+            {% if section.settings.featured_product_title != blank %}
+              <h3 class="text-3xl font-bold mb-4">{{ section.settings.featured_product_title }}</h3>
+            {% endif %}
+            
+            {% if section.settings.cta_button_text != blank %}
+              <a href="{{ section.settings.cta_button_link | default: '/collections/all' }}" 
+                 class="bg-primary hover:bg-primary/90 text-black font-bold py-3 px-8 rounded-lg uppercase tracking-wider transition">
+                {{ section.settings.cta_button_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+        
+        <!-- Decorative Elements -->
+        <div class="absolute top-4 right-4 w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+        <div class="absolute bottom-4 left-4 w-3 h-3 bg-pink-500 rounded-full animate-pulse"></div>
+        <div class="absolute top-1/2 right-8 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+      </div>
+      
+      <!-- Feature Highlights -->
+      {% if section.blocks.size > 0 %}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          {% for block in section.blocks %}
+            {% if block.type == 'feature_highlight' %}
+              <div class="bg-darker rounded-lg p-6 text-center">
+                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h4 class="text-white font-semibold mb-2">{{ block.settings.feature_title }}</h4>
+                <p class="text-gray-400 text-sm">{{ block.settings.feature_description }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tech Passion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "IGNITE YOUR TECH PASSION"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Dynamic Technology for an Immersive Digital Experience"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Tech Setup Image"
+    },
+    {
+      "type": "text",
+      "id": "featured_product_title",
+      "label": "Featured Product Title"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Button Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_highlight",
+      "name": "Feature Highlight",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_title",
+          "label": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "feature_description",
+          "label": "Feature Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tech Passion",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "feature_highlight",
+          "settings": {
+            "feature_title": "RGB Lighting",
+            "feature_description": "Customizable RGB backlighting with millions of colors"
+          }
+        },
+        {
+          "type": "feature_highlight",
+          "settings": {
+            "feature_title": "Mechanical Switches",
+            "feature_description": "Premium mechanical switches for tactile feedback"
+          }
+        },
+        {
+          "type": "feature_highlight",
+          "settings": {
+            "feature_title": "Tech Optimized",
+            "feature_description": "Designed specifically for premium tech performance"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

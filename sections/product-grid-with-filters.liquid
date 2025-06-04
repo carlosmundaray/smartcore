@@ -1,0 +1,239 @@
+<section class="py-16 bg-darker">
+  <div class="container mx-auto px-4">
+    <!-- Category Filter Icons -->
+    <div class="flex justify-center mb-12">
+      <div class="flex space-x-8 bg-dark rounded-full px-8 py-4">
+        {% for block in section.blocks %}
+          {% if block.type == 'filter_icon' %}
+            <button class="p-3 rounded-full bg-gray-800 hover:bg-primary transition group" data-filter="{{ block.settings.filter_category }}">
+              {% case block.settings.icon_type %}
+                {% when 'pc' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                {% when 'mouse' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 002-2v-3a2 2 0 012-2h8a2 2 0 012 2v3a2 2 0 01-2 2H6z" />
+                  </svg>
+                {% when 'keyboard' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                  </svg>
+                {% when 'headset' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                {% when 'chair' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V9a5 5 0 0110 0v8m0 0v4M9 21h6m-9 0h12" />
+                  </svg>
+                {% when 'controller' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M16 14h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                {% when 'accessories' %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+              {% endcase %}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    <!-- Level Up Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-16">
+      <div class="lg:col-span-1">
+        <div class="bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg p-6 h-full flex flex-col justify-center">
+          <h3 class="text-2xl font-bold text-white mb-4">Level Up with Fan Favorites</h3>
+          <a href="/collections/all" class="inline-flex items-center text-white hover:text-primary transition">
+            View all
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <div class="lg:col-span-3">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {% assign featured_products = collections.all.products | limit: 3 %}
+          {% for product in featured_products %}
+            <a href="{{ product.url }}" class="block">
+              <div class="bg-dark rounded-lg overflow-hidden group hover:scale-105 transition-transform duration-300">
+                <div class="relative">
+                  {% if product.featured_image != blank %}
+                    <img 
+                      src="{{ product.featured_image | img_url: '400x300' }}" 
+                      alt="{{ product.title }}" 
+                      class="w-full h-48 object-cover"
+                    >
+                  {% else %}
+                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
+                      <span class="text-gray-400">{{ product.title | truncate: 20 }}</span>
+                    </div>
+                  {% endif %}
+                  
+                  {% if product.compare_at_price > product.price %}
+                    <span class="absolute top-2 right-2 bg-primary text-black text-xs font-bold px-2 py-1 rounded">
+                      NEW
+                    </span>
+                  {% endif %}
+                  
+                  <div class="absolute bottom-2 right-2">
+                    <button class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full transition" onclick="event.preventDefault(); addToWishlist('{{ product.id }}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="p-4">
+                  <h4 class="text-white font-semibold mb-2">{{ product.title }}</h4>
+                  <div class="flex items-center justify-between">
+                    <div class="flex flex-col">
+                      {% if product.compare_at_price > product.price %}
+                        <span class="text-gray-400 line-through text-sm">{{ product.compare_at_price | money }}</span>
+                        <span class="text-primary font-bold">{{ product.price | money }}</span>
+                      {% else %}
+                        <span class="text-primary font-bold">{{ product.price | money }}</span>
+                      {% endif %}
+                    </div>
+                    <div class="flex space-x-1">
+                      <div class="w-3 h-3 bg-pink-500 rounded-full"></div>
+                      <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                      <div class="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function addToWishlist(productId) {
+  // Add to wishlist functionality
+  console.log('Added product to wishlist:', productId);
+  // You can implement actual wishlist functionality here
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product Grid with Filters",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "filter_icon",
+      "name": "Filter Icon",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            {
+              "value": "pc",
+              "label": "PC"
+            },
+            {
+              "value": "mouse",
+              "label": "Mouse"
+            },
+            {
+              "value": "keyboard",
+              "label": "Keyboard"
+            },
+            {
+              "value": "headset",
+              "label": "Headset"
+            },
+            {
+              "value": "chair",
+              "label": "Chair"
+            },
+            {
+              "value": "controller",
+              "label": "Controller"
+            },
+            {
+              "value": "accessories",
+              "label": "Accessories"
+            }
+          ],
+          "default": "pc"
+        },
+        {
+          "type": "text",
+          "id": "filter_category",
+          "label": "Filter Category"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid with Filters",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "pc",
+            "filter_category": "pc"
+          }
+        },
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "mouse",
+            "filter_category": "mouse"
+          }
+        },
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "keyboard",
+            "filter_category": "keyboard"
+          }
+        },
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "headset",
+            "filter_category": "headset"
+          }
+        },
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "chair",
+            "filter_category": "chair"
+          }
+        },
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "controller",
+            "filter_category": "controller"
+          }
+        },
+        {
+          "type": "filter_icon",
+          "settings": {
+            "icon_type": "accessories",
+            "filter_category": "accessories"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

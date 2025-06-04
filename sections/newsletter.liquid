@@ -17,8 +17,8 @@
         
         <div class="relative bg-darker rounded-lg p-8 border border-primary/30">
           <div class="text-center">
-            <h2 class="text-3xl font-bold mb-4 uppercase tracking-wider">{{ section.settings.heading | default: 'JOIN THE GAMING ELITE' }}</h2>
-            <p class="mb-8 text-gray-300">{{ section.settings.subheading | default: 'Subscribe to our newsletter to receive updates on new gaming gear, exclusive offers, and pro gaming tips.' }}</p>
+            <h2 class="text-3xl font-bold mb-4 uppercase tracking-wider">{{ section.settings.heading | default: 'JOIN THE TECH ELITE' }}</h2>
+            <p class="mb-8 text-gray-300">{{ section.settings.subheading | default: 'Subscribe to our newsletter to receive updates on new tech products, exclusive offers, and pro tips.' }}</p>
             
             {% form 'customer', class: 'flex flex-col sm:flex-row gap-3 max-w-lg mx-auto' %}
               <input type="hidden" name="contact[tags]" value="newsletter">
@@ -105,13 +105,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "JOIN THE GAMING ELITE"
+      "default": "JOIN THE TECH ELITE"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Subscribe to our newsletter to receive updates on new gaming gear, exclusive offers, and pro gaming tips."
+      "default": "Subscribe to our newsletter to receive updates on new tech products, exclusive offers, and pro tips."
     },
     {
       "type": "text",

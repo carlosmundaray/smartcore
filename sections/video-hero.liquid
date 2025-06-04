@@ -1,0 +1,322 @@
+<section class="video-hero-section relative overflow-hidden">
+  <div class="video-banner-wrapper isolate">
+    <div class="deferred-media video-model-media" data-load-when-visible>
+      <!-- Video Poster/Thumbnail -->
+      <div class="media-poster media">
+        {% if section.settings.video_poster != blank %}
+          <img 
+            src="{{ section.settings.video_poster | img_url: '3600x2025' }}" 
+            alt="Load video: {{ section.settings.video_title | default: 'SmartCore Hero Video' }}" 
+            srcset="{{ section.settings.video_poster | img_url: '165x93' }} 165w,
+                    {{ section.settings.video_poster | img_url: '360x203' }} 360w,
+                    {{ section.settings.video_poster | img_url: '450x253' }} 450w,
+                    {{ section.settings.video_poster | img_url: '660x371' }} 660w,
+                    {{ section.settings.video_poster | img_url: '900x506' }} 900w,
+                    {{ section.settings.video_poster | img_url: '1320x743' }} 1320w,
+                    {{ section.settings.video_poster | img_url: '1800x1013' }} 1800w,
+                    {{ section.settings.video_poster | img_url: '2136x1201' }} 2136w,
+                    {{ section.settings.video_poster | img_url: '2400x1350' }} 2400w,
+                    {{ section.settings.video_poster | img_url: '3600x2025' }} 3600w" 
+            width="3600" 
+            height="2025" 
+            loading="eager" 
+            class="video-cover-image" 
+            sizes="(min-width: 1600px) 1600px, 100vw" 
+            fetchpriority="high"
+          >
+        {% else %}
+          <img 
+            src="//ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=3600" 
+            alt="Load video: SmartCore Hero Video" 
+            srcset="//ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=165 165w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=360 360w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=450 450w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=660 660w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=900 900w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=1320 1320w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=1800 1800w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=2136 2136w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=2400 2400w,
+                    //ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000.jpg?v=1730608000&width=3600 3600w" 
+            width="3600" 
+            height="2025" 
+            loading="eager" 
+            class="video-cover-image" 
+            sizes="(min-width: 1600px) 1600px, 100vw" 
+            fetchpriority="high"
+          >
+        {% endif %}
+      </div>
+      
+      <!-- Video Element -->
+      <template>
+        <video 
+          playsinline 
+          autoplay 
+          loop 
+          muted 
+          preload="metadata" 
+          aria-label="{{ section.settings.video_title | default: 'SmartCore Hero Video' }}"
+          {% if section.settings.video_poster != blank %}
+            poster="{{ section.settings.video_poster | img_url: '1600x900' }}"
+          {% else %}
+            poster="//ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000_1600x.jpg?v=1730608000"
+          {% endif %}
+        >
+          {% if section.settings.video_url != blank %}
+            <source src="{{ section.settings.video_url }}" type="video/mp4">
+          {% else %}
+            <source src="//ascent-vortex.myshopify.com/cdn/shop/videos/c/vp/56593417cb064d15892cd7686a875d05/56593417cb064d15892cd7686a875d05.HD-1080p-7.2Mbps-37513957.mp4?v=0" type="video/mp4">
+          {% endif %}
+          
+          {% if section.settings.video_poster != blank %}
+            <img alt="{{ section.settings.video_title | default: 'SmartCore Hero Video' }}" src="{{ section.settings.video_poster | img_url: '1600x900' }}">
+          {% else %}
+            <img alt="SmartCore Hero Video" src="//ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000_1600x.jpg?v=1730608000">
+          {% endif %}
+        </video>
+      </template>
+      
+      <video 
+        playsinline 
+        autoplay 
+        loop 
+        muted 
+        preload="metadata" 
+        aria-label="{{ section.settings.video_title | default: 'SmartCore Hero Video' }}"
+        {% if section.settings.video_poster != blank %}
+          poster="{{ section.settings.video_poster | img_url: '1600x900' }}"
+        {% else %}
+          poster="//ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000_1600x.jpg?v=1730608000"
+        {% endif %}
+      >
+        {% if section.settings.video_url != blank %}
+          <source src="{{ section.settings.video_url }}" type="video/mp4">
+        {% else %}
+          <source src="//ascent-vortex.myshopify.com/cdn/shop/videos/c/vp/56593417cb064d15892cd7686a875d05/56593417cb064d15892cd7686a875d05.HD-1080p-7.2Mbps-37513957.mp4?v=0" type="video/mp4">
+        {% endif %}
+        
+        {% if section.settings.video_poster != blank %}
+          <img alt="{{ section.settings.video_title | default: 'SmartCore Hero Video' }}" src="{{ section.settings.video_poster | img_url: '1600x900' }}">
+        {% else %}
+          <img alt="SmartCore Hero Video" src="//ascent-vortex.myshopify.com/cdn/shop/files/preview_images/56593417cb064d15892cd7686a875d05.thumbnail.0000000000_1600x.jpg?v=1730608000">
+        {% endif %}
+      </video>
+    </div>
+    
+    <!-- Video Overlay Content (Optional) -->
+    {% if section.settings.show_overlay_content %}
+      <div class="video-overlay-content">
+        <div class="container mx-auto px-4 h-full flex items-center justify-center">
+          <div class="text-center text-white max-w-4xl">
+            {% if section.settings.overlay_title != blank %}
+              <h1 class="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-wider">
+                {{ section.settings.overlay_title }}
+              </h1>
+            {% endif %}
+            
+            {% if section.settings.overlay_subtitle != blank %}
+              <p class="text-xl md:text-2xl mb-8 text-gray-200">
+                {{ section.settings.overlay_subtitle }}
+              </p>
+            {% endif %}
+            
+            {% if section.settings.overlay_button_text != blank %}
+              <a 
+                href="{{ section.settings.overlay_button_link | default: '/collections/all' }}" 
+                class="inline-block bg-primary hover:bg-primary/90 text-black font-bold py-4 px-8 rounded-lg text-lg uppercase tracking-wider transition"
+              >
+                {{ section.settings.overlay_button_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .video-hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 800px;
+  }
+  
+  .video-banner-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .deferred-media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .media-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .video-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 2;
+  }
+  
+  .video-overlay-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .video-hero-section {
+      height: 70vh;
+      min-height: 400px;
+      max-height: 600px;
+    }
+    
+    .video-overlay-content h1 {
+      font-size: 2rem;
+    }
+    
+    .video-overlay-content p {
+      font-size: 1.125rem;
+    }
+  }
+  
+  /* Ensure video loads properly */
+  .deferred-media[loaded] .media-poster {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .deferred-media video {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .deferred-media[loaded] video {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Handle deferred media loading
+    const deferredMedia = document.querySelector('.deferred-media');
+    const video = deferredMedia.querySelector('video');
+    
+    if (deferredMedia && video) {
+      // Mark as loaded when video can play
+      video.addEventListener('canplay', function() {
+        deferredMedia.setAttribute('loaded', 'true');
+      });
+      
+      // Fallback for autoplay issues
+      video.addEventListener('loadeddata', function() {
+        if (video.paused) {
+          video.play().catch(function(error) {
+            console.log('Video autoplay failed:', error);
+          });
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Video Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "text",
+      "id": "video_title",
+      "label": "Video Title",
+      "default": "SmartCore Hero Video"
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Video URL",
+      "info": "Upload your video to Shopify files and paste the URL here"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video Poster Image",
+      "info": "Thumbnail image shown before video loads"
+    },
+    {
+      "type": "header",
+      "content": "Overlay Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay_content",
+      "label": "Show Overlay Content",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "overlay_title",
+      "label": "Overlay Title"
+    },
+    {
+      "type": "text",
+      "id": "overlay_subtitle",
+      "label": "Overlay Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "overlay_button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "overlay_button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Hero",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

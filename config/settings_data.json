@@ -1,8 +1,8 @@
 {
   "current": {
-    "color_primary": "#00FFAA",
-    "color_secondary": "#FF00AA",
-    "color_accent": "#00AAFF",
+    "color_primary": "#00A8FF",
+    "color_secondary": "#00D2FF",
+    "color_accent": "#FF6B35",
     "color_body_text": "#FFFFFF",
     "color_body_bg": "#0A0A1A",
     "font_heading": "rajdhani_n7",
@@ -18,11 +18,11 @@
       "footer": {
         "type": "footer",
         "settings": {
-          "about_text": "Smartcore Tech is your ultimate destination for cutting-edge gaming hardware. Level up your setup with our premium selection of gaming PCs, monitors, peripherals, and accessories.",
+          "about_text": "SmartCore is your ultimate destination for cutting-edge tech products. Level up your setup with our premium selection of gaming PCs, monitors, peripherals, and accessories.",
           "footer_menu": "footer",
           "address": "123 Cyber Street, Gaming District, CA 94043",
           "phone": "+1 (555) 123-4567",
-          "email": "info@Smartcoretech.com"
+          "email": "info@smartcore.com"
         }
       }
     }

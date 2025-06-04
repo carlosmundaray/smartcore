@@ -108,27 +108,31 @@
               <label for="address_country_new" class="block text-sm font-medium text-gray-700 mb-1">
                 {{ 'customer.addresses.country' | t }}
               </label>
-              <select 
-                id="address_country_new" 
-                name="address[country]" 
-                data-default="{{ form.country }}" 
-                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
-              >
-                {{ all_country_option_tags }}
-              </select>
+              <div class="select-wrapper">
+                <select 
+                  id="address_country_new" 
+                  name="address[country]" 
+                  data-default="{{ form.country }}" 
+                  class="light-select w-full"
+                >
+                  {{ all_country_option_tags }}
+                </select>
+              </div>
             </div>
             
             <div id="address_province_container_new" style="display:none;">
               <label for="address_province_new" class="block text-sm font-medium text-gray-700 mb-1">
                 {{ 'customer.addresses.province' | t }}
               </label>
-              <select 
-                id="address_province_new" 
-                name="address[province]" 
-                data-default="{{ form.province }}" 
-                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
-              >
-              </select>
+              <div class="select-wrapper">
+                <select 
+                  id="address_province_new" 
+                  name="address[province]" 
+                  data-default="{{ form.province }}" 
+                  class="light-select w-full"
+                >
+                </select>
+              </div>
             </div>
             
             <div>
@@ -319,27 +323,31 @@
                   <label for="address_country_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
                     {{ 'customer.addresses.country' | t }}
                   </label>
-                  <select 
-                    id="address_country_{{ address.id }}" 
-                    name="address[country]" 
-                    data-default="{{ form.country }}" 
-                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
-                  >
-                    {{ all_country_option_tags }}
-                  </select>
+                  <div class="select-wrapper">
+                    <select 
+                      id="address_country_{{ address.id }}" 
+                      name="address[country]" 
+                      data-default="{{ form.country }}" 
+                      class="light-select w-full"
+                    >
+                      {{ all_country_option_tags }}
+                    </select>
+                  </div>
                 </div>
                 
                 <div id="address_province_container_{{ address.id }}" style="display:none;">
                   <label for="address_province_{{ address.id }}" class="block text-sm font-medium text-gray-700 mb-1">
                     {{ 'customer.addresses.province' | t }}
                   </label>
-                  <select 
-                    id="address_province_{{ address.id }}" 
-                    name="address[province]" 
-                    data-default="{{ form.province }}" 
-                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
-                  >
-                  </select>
+                  <div class="select-wrapper">
+                    <select 
+                      id="address_province_{{ address.id }}" 
+                      name="address[province]" 
+                      data-default="{{ form.province }}" 
+                      class="light-select w-full"
+                    >
+                    </select>
+                  </div>
                 </div>
                 
                 <div>

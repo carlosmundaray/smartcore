@@ -69,15 +69,17 @@
         
         <div class="flex items-center mt-4 sm:mt-0">
           <label for="sort-by" class="text-sm text-gray-700 mr-2">Sort by:</label>
-          <select id="sort-by" class="text-sm border-gray-300 rounded-md focus:border-primary focus:ring-primary">
-            <option value="manual">Featured</option>
-            <option value="price-ascending">Price: Low to High</option>
-            <option value="price-descending">Price: High to Low</option>
-            <option value="title-ascending">Alphabetically: A-Z</option>
-            <option value="title-descending">Alphabetically: Z-A</option>
-            <option value="created-descending">Date: New to Old</option>
-            <option value="created-ascending">Date: Old to New</option>
-          </select>
+          <div class="select-wrapper">
+            <select id="sort-by" class="light-select">
+              <option value="manual">Featured</option>
+              <option value="price-ascending">Price: Low to High</option>
+              <option value="price-descending">Price: High to Low</option>
+              <option value="title-ascending">Alphabetically: A-Z</option>
+              <option value="title-descending">Alphabetically: Z-A</option>
+              <option value="created-descending">Date: New to Old</option>
+              <option value="created-ascending">Date: Old to New</option>
+            </select>
+          </div>
         </div>
       </div>
       

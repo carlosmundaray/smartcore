@@ -1,0 +1,194 @@
+<section class="brand-scroll-section py-4 bg-dark">
+  <div class="brand-scroll-container">
+    <div class="brand-scroll-wrapper">
+      <div class="brand-scroll-track" id="brand-scroll-track">
+        <!-- Set 1 -->
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_1.png' | asset_url }}" alt="Urban Edge" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_2.png' | asset_url }}" alt="Spencer" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_3.png' | asset_url }}" alt="Dreamgear" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_4.png' | asset_url }}" alt="Aldenhaire" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_5.png' | asset_url }}" alt="Nabrax Gaming" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_6.png' | asset_url }}" alt="Hyperguard" class="brand-logo-img" width="200" height="80">
+        </div>
+        <!-- Set 2 -->
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_1.png' | asset_url }}" alt="Urban Edge" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_2.png' | asset_url }}" alt="Spencer" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_3.png' | asset_url }}" alt="Dreamgear" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_4.png' | asset_url }}" alt="Aldenhaire" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_5.png' | asset_url }}" alt="Nabrax Gaming" class="brand-logo-img" width="200" height="80">
+        </div>
+        <div class="brand-scroll-item">
+          <img src="{{ 'brand_6.png' | asset_url }}" alt="Hyperguard" class="brand-logo-img" width="200" height="80">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand-scroll-section {
+    background-color: #1a1a1a;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .brand-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .brand-scroll-wrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .brand-scroll-track {
+    display: flex;
+    gap: 60px;
+    animation: brandScrollInfinite 40s linear infinite;
+    width: max-content;
+    align-items: center;
+  }
+  
+  .brand-scroll-item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: 60px;
+  }
+  
+  .brand-logo-img {
+    max-width: 500px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    filter: grayscale(100%) brightness(1.2);
+  }
+  
+  .brand-scroll-item:hover .brand-logo-img {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: grayscale(0%) brightness(1);
+  }
+  
+  .brand-scroll-track:hover {
+    animation-play-state: paused;
+  }
+  
+  @keyframes brandScrollInfinite {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% / 3));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .brand-scroll-track {
+      gap: 40px;
+    }
+    
+    .brand-scroll-item {
+      min-width: 100px;
+      height: 50px;
+    }
+    
+    .brand-logo-img {
+      max-width: 200px;
+      max-height: 80px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .brand-scroll-track {
+      gap: 30px;
+    }
+    
+    .brand-scroll-item {
+      min-width: 80px;
+      height: 40px;
+    }
+    
+    .brand-logo-img {
+      max-width: 200px;
+      max-height: 80px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollTrack = document.getElementById('brand-scroll-track');
+    
+    if (scrollTrack) {
+      // Pause animation on hover
+      scrollTrack.addEventListener('mouseenter', function() {
+        this.style.animationPlayState = 'paused';
+      });
+      
+      scrollTrack.addEventListener('mouseleave', function() {
+        this.style.animationPlayState = 'running';
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Brand Scroll",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand Scroll Settings"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll Speed",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "default": 40,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on Hover",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Scroll",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Smartcore",
+    "theme_name": "SmartCore",
     "theme_version": "1.0.0",
     "theme_author": "Carlos Mundaray",
-    "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/online-store\/themes\/os20\/themes-by-shopify\/dawn",
-    "theme_support_url": "https:\/\/support.shopify.com\/",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes/os20/themes-by-shopify/dawn",
+    "theme_support_url": "https://support.shopify.com/"
   },
   {
     "name": "Colors",
@@ -18,19 +18,19 @@
         "type": "color",
         "id": "color_primary",
         "label": "Primary Color",
-        "default": "#00FFAA"
+        "default": "#00A8FF"
       },
       {
         "type": "color",
         "id": "color_secondary",
         "label": "Secondary Color",
-        "default": "#FF00AA"
+        "default": "#00D2FF"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent Color",
-        "default": "#00AAFF"
+        "default": "#FF6B35"
       },
       {
         "type": "color",
@@ -145,18 +145,6 @@
         "id": "favicon",
         "label": "Favicon image",
         "info": "Will be scaled down to 32 x 32px"
-      }
-    ]
-  },
-  {
-    "name": "Video",
-    "settings": [
-      {
-        "type": "text",
-        "id": "video_asset_name",
-        "label": "Nombre del video en Assets",
-        "default": "jugador.mp4",
-        "info": "Coloca el nombre exacto del archivo en assets/ (ej: jugador.mp4)"
       }
     ]
   }

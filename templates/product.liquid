@@ -2,11 +2,11 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <!-- Product Images -->
     <div class="space-y-4">
-      <div class="bg-white rounded-lg overflow-hidden border">
+      <div class="bg-white rounded-lg overflow-hidden border aspect-square">
         <img 
           src="{{ product.featured_image | img_url: '800x800', crop: 'center' }}" 
           alt="{{ product.title }}" 
-          class="w-full h-auto object-center object-cover"
+          class="w-full h-full object-contain object-center"
           id="main-product-image"
         >
       </div>
@@ -14,11 +14,11 @@
       {% if product.images.size > 1 %}
         <div class="grid grid-cols-5 gap-2">
           {% for image in product.images %}
-            <div class="border rounded-lg overflow-hidden cursor-pointer hover:border-primary transition" onclick="changeMainImage('{{ image | img_url: '800x800', crop: 'center' }}')">
+            <div class="border rounded-lg overflow-hidden cursor-pointer hover:border-primary transition aspect-square" onclick="changeMainImage('{{ image | img_url: '800x800', crop: 'center' }}')">
               <img 
                 src="{{ image | img_url: '150x150', crop: 'center' }}" 
                 alt="{{ product.title }}" 
-                class="w-full h-auto object-center object-cover"
+                class="w-full h-full object-contain object-center"
               >
             </div>
           {% endfor %}
@@ -27,7 +27,7 @@
     </div>
     
     <!-- Product Info -->
-    <div class="space-y-6">
+    <div class="space-y-6 flex flex-col">
       <div>
         <h1 class="text-3xl font-bold">{{ product.title }}</h1>
         <p class="text-gray-500">{{ product.vendor }}</p>
@@ -52,91 +52,116 @@
         {% endif %}
       </div>
       
-      <div class="border-t border-b py-4">
-        <div class="prose">
+      <div class="border-t border-b py-4 flex-grow">
+        <div class="prose max-w-none">
           {{ product.description }}
         </div>
       </div>
       
-      <form action="/cart/add" method="post" class="space-y-4">
-        {% if product.variants.size > 1 %}
-          <div>
-            <label for="product-variant" class="block text-sm font-medium text-gray-700 mb-1">Options</label>
-            <select 
-              id="product-variant" 
-              name="id" 
-              class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
-            >
-              {% for variant in product.variants %}
-                <option 
-                  value="{{ variant.id }}" 
-                  {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %}
+      <!-- Product Form - Fixed positioning -->
+      <div class="mt-auto">
+        <form action="/cart/add" method="post" class="space-y-4">
+          {% if product.variants.size > 1 %}
+            <div>
+              <label for="product-variant" class="block text-sm font-medium text-gray-700 mb-1">Options</label>
+              <div class="select-wrapper">
+                <select 
+                  id="product-variant" 
+                  name="id" 
+                  class="light-select w-full"
                 >
-                  {{ variant.title }} - {{ variant.price | money }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-        {% else %}
-          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-        {% endif %}
-        
-        <div>
-          <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
-          <input 
-            type="number" 
-            id="quantity" 
-            name="quantity" 
-            value="1" 
-            min="1" 
-            class="w-full border-gray-300 rounded-lg shadow-sm focus:border-primary focus:ring-primary"
-          >
-        </div>
-        
-        <div class="flex space-x-4">
-          <button 
-            type="submit" 
-            class="flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition"
-            {% unless product.available %} disabled {% endunless %}
-          >
-            {% if product.available %}
-              Add to Cart
-            {% else %}
-              Sold Out
-            {% endif %}
-          </button>
+                  {% for variant in product.variants %}
+                    <option 
+                      value="{{ variant.id }}" 
+                      {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %}
+                    >
+                      {{ variant.title }} - {{ variant.price | money }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          {% endif %}
           
-          <button 
-            type="button" 
-            class="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-6 rounded-lg transition"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          <div class="flex items-center space-x-4">
+            <div class="flex-1">
+              <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+              <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                <button 
+                  type="button" 
+                  class="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition"
+                  onclick="decrementQuantity()"
+                >
+                  -
+                </button>
+                <input 
+                  type="number" 
+                  id="quantity" 
+                  name="quantity" 
+                  value="1" 
+                  min="1" 
+                  class="w-16 text-center border-0 focus:ring-0 py-2"
+                  readonly
+                >
+                <button 
+                  type="button" 
+                  class="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition"
+                  onclick="incrementQuantity()"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex space-x-4">
+            <button 
+              type="submit" 
+              class="flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition"
+              {% unless product.available %} disabled {% endunless %}
+            >
+              {% if product.available %}
+                Add to Cart
+              {% else %}
+                Sold Out
+              {% endif %}
+            </button>
+            
+            <button 
+              type="button" 
+              class="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-6 rounded-lg transition"
+              onclick="addToWishlist('{{ product.id }}')"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        
+        <div class="space-y-3 mt-6">
+          <div class="flex items-center text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
-          </button>
-        </div>
-      </form>
-      
-      <div class="space-y-3">
-        <div class="flex items-center text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-          </svg>
-          <span>Free shipping on orders over $100</span>
-        </div>
-        
-        <div class="flex items-center text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-          <span>1-year warranty included</span>
-        </div>
-        
-        <div class="flex items-center text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" />
-          </svg>
-          <span>30-day easy returns</span>
+            <span>Free shipping on orders over $100</span>
+          </div>
+          
+          <div class="flex items-center text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span>1-year warranty included</span>
+          </div>
+          
+          <div class="flex items-center text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" />
+            </svg>
+            <span>30-day easy returns</span>
+          </div>
         </div>
       </div>
     </div>
@@ -270,108 +295,4 @@
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                     </svg>
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <p class="text-sm text-gray-500">February 28, 2023</p>
-            </div>
-            <p class="text-gray-700">Good product but shipping took longer than expected. The product itself is good quality though.</p>
-          </div>
-        </div>
-        
-        <div>
-          <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition">
-            Write a Review
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Related Products -->
-  <div class="mt-12">
-    <h2 class="text-2xl font-bold mb-6">You May Also Like</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {% for product in collections.all.products limit: 4 %}
-        {% if product.handle != product.handle %}
-          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition group">
-            <a href="{{ product.url }}" class="block relative">
-              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
-                {% if product.featured_image != blank %}
-                  <img 
-                    src="{{ product.featured_image | img_url: '500x500', crop: 'center' }}" 
-                    alt="{{ product.featured_image.alt | escape }}"
-                    class="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300"
-                  >
-                {% else %}
-                  {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
-                {% endif %}
-              </div>
-              
-              {% if product.compare_at_price > product.price %}
-                <span class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                  Sale
-                </span>
-              {% endif %}
-            </a>
-            
-            <div class="p-4">
-              <h3 class="text-lg font-medium text-gray-900 mb-1">
-                <a href="{{ product.url }}">{{ product.title }}</a>
-              </h3>
-              <p class="text-sm text-gray-500 mb-2">{{ product.vendor }}</p>
-              
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  {% if product.compare_at_price > product.price %}
-                    <span class="text-gray-400 line-through text-sm mr-2">{{ product.compare_at_price | money }}</span>
-                  {% endif %}
-                  <span class="text-lg font-medium text-gray-900">{{ product.price | money }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</div>
-
-<script>
-  function changeMainImage(imageUrl) {
-    document.getElementById('main-product-image').src = imageUrl;
-  }
-  
-  function showTab(tabId) {
-    // Hide all tabs
-    document.getElementById('description').classList.add('hidden');
-    document.getElementById('specifications').classList.add('hidden');
-    document.getElementById('reviews').classList.add('hidden');
-    
-    // Show the selected tab
-    document.getElementById(tabId).classList.remove('hidden');
-    
-    // Update tab buttons
-    const buttons = document.querySelectorAll('nav button');
-    buttons.forEach(button => {
-      if (button.getAttribute('onclick').includes(tabId)) {
-        button.classList.remove('border-transparent', 'text-gray-500');
-        button.classList.add('border-primary', 'text-primary');
-      } else {
-        button.classList.remove('border-primary', 'text-primary');
-        button.classList.add('border-transparent', 'text-gray-500');
-      }
-    });
-  }
-</script>
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1

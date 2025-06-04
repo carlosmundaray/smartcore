@@ -44,7 +44,7 @@
         "other": "{{ count }} resultados para \"{{ terms }}\""
       },
       "title": "Buscar en nuestra tienda",
-      "placeholder": "Buscar equipos gaming",
+      "placeholder": "Buscar productos tech",
       "submit": "Buscar",
       "close": "Cerrar búsqueda"
     },
@@ -243,6 +243,15 @@
     "keyboards": "Teclados Mecánicos",
     "mice": "Ratones Gaming",
     "headsets": "Auriculares Gaming",
+    "accessories": "Accesorios",
+    "components": "Componentes PC"
+  },
+  "tech_categories": {
+    "tech_pcs": "PCs Tech",
+    "monitors": "Monitores Tech",
+    "keyboards": "Teclados Mecánicos",
+    "mice": "Ratones Tech",
+    "headsets": "Auriculares Tech",
     "accessories": "Accesorios",
     "components": "Componentes PC"
   }

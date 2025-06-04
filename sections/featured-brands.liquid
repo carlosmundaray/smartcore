@@ -1,0 +1,114 @@
+<section class="py-16 bg-darker">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold uppercase tracking-wider text-white mb-4">
+        {{ section.settings.section_title | default: 'FEATURED BRANDS' }}
+      </h2>
+      <p class="text-gray-400">
+        {{ section.settings.section_subtitle | default: 'Brands You Know and Trust' }}
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 items-center">
+      {% for block in section.blocks %}
+        {% if block.type == 'brand_logo' and block.settings.logo != blank %}
+          <div class="flex justify-center">
+            <img 
+              src="{{ block.settings.logo | img_url: '150x80' }}" 
+              alt="{{ block.settings.brand_name }}" 
+              class="max-h-12 opacity-60 hover:opacity-100 transition filter grayscale hover:grayscale-0"
+            >
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Brands",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "FEATURED BRANDS"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Brands You Know and Trust"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand_logo",
+      "name": "Brand Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Brand Logo"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Brands",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 1"
+          }
+        },
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 2"
+          }
+        },
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 3"
+          }
+        },
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 4"
+          }
+        },
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 5"
+          }
+        },
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 6"
+          }
+        },
+        {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Brand 7"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

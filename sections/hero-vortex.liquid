@@ -1,0 +1,112 @@
+<section class="relative min-h-screen overflow-hidden">
+  <!-- Hero Background -->
+  <div class="absolute inset-0">
+    {% if section.settings.hero_image != blank %}
+      <img 
+        src="{{ section.settings.hero_image | img_url: 'master' }}" 
+        alt="Gaming Setup" 
+        class="w-full h-full object-cover"
+      >
+    {% else %}
+      <div class="w-full h-full bg-gradient-to-br from-purple-900 via-blue-900 to-teal-600"></div>
+    {% endif %}
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+  
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto px-4 py-20">
+    <div class="max-w-4xl mx-auto text-center text-white">
+      <h1 class="text-6xl md:text-8xl font-bold mb-6 uppercase tracking-wider">
+        {{ section.settings.hero_title | default: 'Welcome to our store' }}
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 text-gray-200">
+        {{ section.settings.hero_subtitle | default: 'Experience the future of gaming' }}
+      </p>
+      
+      {% if section.settings.hero_button_text != blank %}
+        <a href="{{ section.settings.hero_button_link | default: '/collections/all' }}" 
+           class="inline-block bg-primary hover:bg-primary/90 text-black font-bold py-4 px-8 rounded-lg text-lg uppercase tracking-wider transition">
+          {{ section.settings.hero_button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Brand Logos Slider -->
+  <div class="absolute bottom-0 left-0 right-0 bg-black/60 py-6">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-center items-center space-x-12 overflow-x-auto">
+        {% for block in section.blocks %}
+          {% if block.type == 'brand_logo' and block.settings.logo != blank %}
+            <div class="flex-shrink-0">
+              <img 
+                src="{{ block.settings.logo | img_url: '120x60' }}" 
+                alt="{{ block.settings.brand_name }}" 
+                class="h-8 md:h-12 opacity-70 hover:opacity-100 transition filter grayscale hover:grayscale-0"
+              >
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero SmartCore",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Welcome to our store"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Experience the future of gaming"
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand_logo",
+      "name": "Brand Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Brand Logo"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero SmartCore",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

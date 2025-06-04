@@ -1,0 +1,159 @@
+<section class="py-16 bg-dark">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold uppercase tracking-wider text-white">
+        {{ section.settings.section_title | default: 'TOP PICKS IN MICE' }}
+      </h2>
+      <p class="text-gray-400 mt-2">
+        {{ section.settings.section_subtitle | default: 'Enhance Your Workspace with Precision and Style' }}
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'product_card' %}
+            <div class="bg-gray-800 rounded-lg overflow-hidden group hover:shadow-lg transition-all duration-300">
+              <div class="relative">
+                {% if block.settings.badge != blank %}
+                  <span class="absolute top-2 right-2 bg-green-500 text-xs text-white px-2 py-1 rounded">{{ block.settings.badge }}</span>
+                {% endif %}
+                <div class="h-48 overflow-hidden">
+                  <img 
+                    src="{{ block.settings.product_image | img_url: '400x400' }}" 
+                    alt="{{ block.settings.product_title }}" 
+                    class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                  >
+                </div>
+              </div>
+              <div class="p-4">
+                <h3 class="text-white font-medium text-center">{{ block.settings.product_title }}</h3>
+                <div class="mt-2 text-center">
+                  <span class="text-primary font-bold">{{ block.settings.product_price }}</span>
+                </div>
+                
+                {% if block.settings.color_options %}
+                  <div class="flex justify-center mt-3 space-x-1">
+                    {% assign color_options = block.settings.color_options | split: ',' %}
+                    {% for color in color_options %}
+                      {% assign color_trim = color | strip %}
+                      <div class="w-4 h-4 rounded-full border border-gray-600" style="background-color: {{ color_trim }};"></div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Top Picks",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "TOP PICKS IN MICE"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Enhance Your Workspace with Precision and Style"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "default": "Gaming Mouse"
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price",
+          "default": "$59.00 USD"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text (optional)",
+          "default": "New"
+        },
+        {
+          "type": "text",
+          "id": "color_options",
+          "label": "Color Options (comma separated)",
+          "default": "#ff6b6b, #4ecdc4, #ffffff",
+          "info": "Enter colors as hex codes separated by commas"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Picks",
+      "category": "Products",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "product_title": "Ambi Wired Gaming Mouse",
+            "product_price": "$59.00 USD",
+            "badge": "New"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "product_title": "Essential Gaming Mouse",
+            "product_price": "$55.00 USD",
+            "badge": "New"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "product_title": "Pro Gaming Mouse",
+            "product_price": "$65.00 USD"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "product_title": "HyperSpeed Wireless Mouse",
+            "product_price": "$115.00 USD",
+            "badge": "New"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "product_title": "Wireless Gaming Mouse",
+            "product_price": "$68.00 USD"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
