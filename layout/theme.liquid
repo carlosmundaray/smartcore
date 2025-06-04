@@ -47,8 +47,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   
   {{ content_for_header }}
-  {{ 'application.css' | asset_url | stylesheet_tag }}
-  {{ 'application.js' | asset_url | script_tag }}
+  <style>
+    {% render 'css-variables' %}
+  </style>
+  {% style %}
+    {% include 'application.css' %}
+  {% endstyle %}
+  <script defer src="{{ 'application.js' | asset_url }}"></script>
   
   <style>
     body {

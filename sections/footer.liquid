@@ -88,7 +88,11 @@
           &copy; {{ 'now' | date: "%Y" }} SmartCore. All rights reserved.
         </p>
         <div class="mt-4 md:mt-0">
-          <img src="{{ 'payment-methods.png' | asset_url }}" alt="Payment Methods" class="h-8">
+          <div class="flex items-center space-x-2">
+            {% for type in shop.enabled_payment_types %}
+              {{ type | payment_type_svg_tag: class: 'h-8' }}
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+{% layout 'theme' %}
 <section class="py-16 bg-dark">
   <div class="container mx-auto px-4">
     <div class="text-center mb-12">
@@ -8,11 +9,9 @@
         {{ section.settings.section_subtitle | default: 'Insights, Tips and Guides for You' }}
       </p>
     </div>
-    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      {% assign blog_articles = blog.articles | limit: 3 %}
-      {% if blog_articles.size > 0 %}
-        {% for article in blog_articles %}
+      {% if blog.articles.size > 0 %}
+        {% for article in blog.articles limit: 3 %}
           <article class="bg-darker rounded-lg overflow-hidden group hover:scale-105 transition-transform duration-300">
             <div class="relative">
               {% if article.image != blank %}
