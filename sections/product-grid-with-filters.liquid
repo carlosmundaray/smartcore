@@ -58,59 +58,73 @@
       
       <div class="lg:col-span-3">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {% assign featured_products = collections.all.products | limit: 3 %}
-          {% for product in featured_products %}
-            <a href="{{ product.url }}" class="block">
-              <div class="bg-dark rounded-lg overflow-hidden group hover:scale-105 transition-transform duration-300">
-                <div class="relative">
-                  {% if product.featured_image != blank %}
-                    <img 
-                      src="{{ product.featured_image | img_url: '400x300' }}" 
-                      alt="{{ product.title }}" 
-                      class="w-full h-48 object-cover"
-                    >
-                  {% else %}
-                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                      <span class="text-gray-400">{{ product.title | truncate: 20 }}</span>
-                    </div>
-                  {% endif %}
-                  
-                  {% if product.compare_at_price > product.price %}
-                    <span class="absolute top-2 right-2 bg-primary text-black text-xs font-bold px-2 py-1 rounded">
-                      NEW
-                    </span>
-                  {% endif %}
-                  
-                  <div class="absolute bottom-2 right-2">
-                    <button class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full transition" onclick="event.preventDefault(); addToWishlist('{{ product.id }}')">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                
-                <div class="p-4">
-                  <h4 class="text-white font-semibold mb-2">{{ product.title }}</h4>
-                  <div class="flex items-center justify-between">
-                    <div class="flex flex-col">
-                      {% if product.compare_at_price > product.price %}
-                        <span class="text-gray-400 line-through text-sm">{{ product.compare_at_price | money }}</span>
-                        <span class="text-primary font-bold">{{ product.price | money }}</span>
-                      {% else %}
-                        <span class="text-primary font-bold">{{ product.price | money }}</span>
-                      {% endif %}
-                    </div>
-                    <div class="flex space-x-1">
-                      <div class="w-3 h-3 bg-pink-500 rounded-full"></div>
-                      <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                      <div class="w-3 h-3 bg-white rounded-full"></div>
+          {% if collections.all.products.size > 0 %}
+            {% for product in collections.all.products limit: 6 %}
+              <a href="{{ product.url }}" class="block h-full">
+                <div class="bg-dark rounded-lg overflow-hidden group hover:scale-105 transition-transform duration-300 h-full flex flex-col">
+                  <div class="relative flex-shrink-0">
+                    {% if product.featured_image != blank %}
+                      <img 
+                        src="{{ product.featured_image | img_url: '400x400' }}" 
+                        alt="{{ product.title }}" 
+                        class="w-full h-64 object-contain bg-gray-800"
+                        width="400"
+                        height="400"
+                      >
+                    {% else %}
+                      <div class="w-full h-64 bg-gray-800 flex items-center justify-center">
+                        <span class="text-gray-400">{{ product.title | truncate: 20 }}</span>
+                      </div>
+                    {% endif %}
+                    
+                    {% if product.compare_at_price > product.price %}
+                      <span class="absolute top-2 right-2 bg-primary text-black text-xs font-bold px-2 py-1 rounded">
+                        NEW
+                      </span>
+                    {% endif %}
+                    
+                    <div class="absolute bottom-2 right-2">
+                      <button class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full transition" onclick="event.preventDefault(); addToWishlist('{{ product.id }}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
+                  
+                  <div class="p-4 flex-grow flex flex-col">
+                    <h4 class="text-white font-semibold mb-2 line-clamp-2">{{ product.title }}</h4>
+                    <div class="flex items-center justify-between mt-auto">
+                      <div class="flex flex-col">
+                        {% if product.compare_at_price > product.price %}
+                          <span class="text-gray-400 line-through text-sm">{{ product.compare_at_price | money }}</span>
+                          <span class="text-primary font-bold">{{ product.price | money }}</span>
+                        {% else %}
+                          <span class="text-primary font-bold">{{ product.price | money }}</span>
+                        {% endif %}
+                      </div>
+                      <div class="flex space-x-1">
+                        <div class="w-3 h-3 bg-pink-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </a>
-          {% endfor %}
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="col-span-3 text-center py-12">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <h3 class="text-xl font-bold text-white mb-2">No se encontraron productos</h3>
+              <p class="text-gray-400 mb-6">Lo sentimos, no pudimos encontrar los productos que buscas.</p>
+              <a href="/collections/all" class="inline-block bg-primary text-black font-bold py-2 px-6 rounded hover:bg-primary/90 transition">
+                Ver todos los productos
+              </a>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -118,10 +132,92 @@
 </section>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sortSelect = document.getElementById('sort-by');
+  const gridView = document.getElementById('grid-view');
+  const listView = document.getElementById('list-view');
+  const productsGrid = document.getElementById('products-grid');
+  const applyFilters = document.getElementById('apply-filters');
+  
+  // Sort functionality
+  sortSelect.addEventListener('change', function() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort_by', this.value);
+    window.location.href = url.toString();
+  });
+  
+  // View toggle
+  gridView.addEventListener('click', function() {
+    productsGrid.classList.remove('grid-cols-1');
+    productsGrid.classList.add('grid-cols-1', 'md:grid-cols-3');
+    localStorage.setItem('view', 'grid');
+  });
+  
+  listView.addEventListener('click', function() {
+    productsGrid.classList.remove('md:grid-cols-3');
+    productsGrid.classList.add('grid-cols-1');
+    localStorage.setItem('view', 'list');
+  });
+  
+  // Load saved view preference
+  const savedView = localStorage.getItem('view');
+  if (savedView === 'list') {
+    listView.click();
+  }
+  
+  // Filter functionality
+  applyFilters.addEventListener('click', function() {
+    const url = new URL(window.location.href);
+    const minPrice = document.getElementById('min-price').value;
+    const maxPrice = document.getElementById('max-price').value;
+    const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
+    const availability = Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(cb => cb.value);
+    
+    if (minPrice) url.searchParams.set('min_price', minPrice);
+    if (maxPrice) url.searchParams.set('max_price', maxPrice);
+    if (categories.length) url.searchParams.set('category', categories.join(','));
+    if (availability.length) url.searchParams.set('availability', availability.join(','));
+    
+    window.location.href = url.toString();
+  });
+});
+
+function addToCart(variantId) {
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: variantId,
+      quantity: 1
+    })
+  })
+  .then(response => response.json())
+  .then(item => {
+    // Show success message
+    const message = document.createElement('div');
+    message.className = 'fixed bottom-4 right-4 bg-primary text-black px-6 py-3 rounded-lg shadow-lg z-50';
+    message.textContent = 'Added to cart!';
+    document.body.appendChild(message);
+    
+    // Remove message after 3 seconds
+    setTimeout(() => {
+      message.remove();
+    }, 3000);
+    
+    // Update cart count
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+      cartCount.textContent = parseInt(cartCount.textContent) + 1;
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
 function addToWishlist(productId) {
-  // Add to wishlist functionality
-  console.log('Added product to wishlist:', productId);
-  // You can implement actual wishlist functionality here
+  // Implementation of adding to wishlist
+  console.log(`Adding to wishlist: ${productId}`);
 }
 </script>
 

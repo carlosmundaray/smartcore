@@ -6,18 +6,19 @@
         <h3 class="text-2xl font-bold text-white mb-4">
           {{ section.settings.search_title | default: "Didn't find the product you were looking for?" }}
         </h3>
-        <div class="flex">
+        <form action="/search" method="get" class="flex">
           <input 
             type="text" 
-            placeholder="Search" 
-            class="flex-1 px-4 py-3 rounded-l-lg bg-white text-black focus:outline-none"
+            name="q"
+            placeholder="Search products..." 
+            class="flex-1 px-4 py-3 h-12 rounded-l-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-primary"
           >
-          <button class="bg-black text-white px-6 py-3 rounded-r-lg hover:bg-gray-800 transition">
+          <button type="submit" class="bg-black text-white px-6 h-12 rounded-r-lg hover:bg-gray-800 transition flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </button>
-        </div>
+        </form>
       </div>
     </div>
     
